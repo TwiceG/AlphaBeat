@@ -3,7 +3,7 @@ import Button from '../components/Button';
 import { guess } from 'web-audio-beat-detector'; // Import BPM detection library
 import '../style/Game.css';  
 import supabase from '../SupaBaseClient';
-import { Highscore } from '../types/Highscore';
+import { Highscore } from '../types/highscore';
 
 // Define types for the music data
 interface Music {
@@ -15,7 +15,7 @@ interface Music {
 const Game: React.FC = () => {
     const [musicList, setMusicList] = useState<Music[]>([]); // State for music list
     const [selectedMusic, setSelectedMusic] = useState<string | null>(null); // State for selected music
-    const [BPM, setBPM] = useState<number>(120);  // State for BPM, defaulting to 120
+    // const [BPM, setBPM] = useState<number>(120);  // State for BPM, defaulting to 120
     const [beatInterval, setBeatInterval] = useState<number>((60 / 120) * 1000 * 2); // State for beat interval
     const [fallingLetters, setFallingLetters] = useState<string[]>([]); // State for falling letters
     const gameBoxRef = useRef<HTMLDivElement | null>(null); // Ref for game box
@@ -84,7 +84,7 @@ const Game: React.FC = () => {
 
                 // Use BPM detection logic
                 const { bpm } = await guess(audioBuffer); // Use the guess function to detect BPM
-                setBPM(bpm); // Update BPM state
+                // setBPM(bpm); // Update BPM state
 
                 // Calculate beatInterval based on the detected BPM
                 const beatsPerSecond = bpm / 60;  // Consistent with the calculation in the second useEffect
