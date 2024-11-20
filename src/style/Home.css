@@ -1,0 +1,42 @@
+
+/* Main container for the homepage */
+.home-container {
+    text-align: center;
+    padding: 50px 20px;
+    color: #333;
+  }
+  
+  /* The main game title */
+  .game-title {
+    font-size: 3rem;
+    color: #d81111; /* Energetic red color */
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    letter-spacing: 5px;  /* Gives a spaced-out effect */
+    animation: pulse 1s infinite;  /* Adds a pulsing effect */
+  }
+  
+  /* Tagline */
+  .game-tagline {
+    font-size: 1.8rem;
+    color: #03040f;  /* Contrasting blue */
+    margin-bottom: 30px;
+    font-weight: bold;
+  }
+  
+  /* Keyframes for pulsing animation */
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  
+
+  

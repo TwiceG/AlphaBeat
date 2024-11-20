@@ -1,0 +1,26 @@
+.btn {
+  background-color: #3e7b94;
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease; /* Smooth transform */
+  box-sizing: border-box; /* Ensure padding and border are included in the button's size */
+}
+
+.btn:hover {
+  background-color: #d81111;
+  transform: scale(1.1); /* Increase size on hover */
+}
+
+.btn-large {
+  font-size: 2rem;
+  padding: 20px 40px; /* Larger padding for better proportion */
+}
+
+/* Optional: Prevent scrollbars when scaling the button */
+.parent-container {
+  overflow: hidden;
+}

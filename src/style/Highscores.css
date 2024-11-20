@@ -1,0 +1,43 @@
+.highscores-container {
+  margin: 30px auto;                      /* Center the container */
+  padding: 10px 15px;                     /* Adjust padding for spacing */
+  background-color: #5eb3b3;              /* Light background */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  border-radius: 10px;                    /* Rounded corners */
+  width: auto;                            /* Auto width to fit content */
+  max-width: 50%;                       /* Set a fixed maximum width for the table */
+  color: rgb(0, 0, 0);                           /* Text color */
+  transition: background-color 0.3s;      /* Smooth transition for background */
+  text-align: center;                     /* Center text in the table */
+}
+
+table {
+  width: 100%;                            /* Table width 100% of its parent container */
+  border-collapse: collapse;              /* Remove space between table cells */
+  margin-top: 20px;                       /* Space from title or other content */
+}
+
+th, td {
+  padding: 8px 12px;                     /* Adjust padding to make the table more compact */
+  text-align: left;                       /* Align text to the left */
+  font-size: 14px;                        /* Smaller font size */
+}
+
+th {
+  background-color: #3e7b94;              /* Header background */
+  color: white;                           /* Header text color */
+  font-weight: bold;                      /* Bold text for headers */
+  border-bottom: 1px solid #ddd;          /* Optional light border for header */
+}
+
+td {
+  background-color: #88d6d6;              /* Light background for rows */
+}
+
+tr:hover td {
+  background-color: #c2e0e0;              /* Highlight row on hover */
+}
+
+tr:last-child td {
+  border-bottom: none;                    /* Remove bottom border for last row */
+}
