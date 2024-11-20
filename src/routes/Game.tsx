@@ -1,10 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
 import Button from '../components/Button'; 
 import { guess } from 'web-audio-beat-detector'; // Import BPM detection library
 import '../style/Game.css';  
 import supabase from '../SupaBaseClient';
-import { Highscore } from './types';
+import { Highscore } from '../types/Highscore';
 
 // Define types for the music data
 interface Music {
