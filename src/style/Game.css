@@ -1,0 +1,67 @@
+html, body {
+    overflow-x: hidden; /* Prevents horizontal scrolling globally */
+    margin: 0;
+    padding: 0;
+}
+
+
+
+.falling-letter {
+    font-size: 48px; /* Adjust the size of the letters */
+    font-weight: bold; /* Make letters thicker */
+    color: #ff0000; /* Change the color if desired */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Optional: add shadow for better visibility */
+    pointer-events: none; /* Prevent interaction with falling letters */
+    transition: transform 0.5s ease; /* Optional: smooth transition on fall */
+}
+
+
+@keyframes fall {
+    0% {
+        top: -50px;
+    }
+    100% {
+        top: 100vh;  /* End at the bottom of the screen */
+    }
+}
+
+
+.highlight {
+    color: limegreen; /* Change to your desired highlight color */
+    transform: scale(1.5); /* Scale the letter up for effect */
+}
+
+.error-indicator {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;  /* Set a width for the circle */
+    height: 100px; /* Set a height for the circle */
+    border-radius: 50%; /* Make it circular */
+    background-color: rgba(255, 0, 0, 0.8); /* Semi-transparent red background */
+    display: flex; /* Use flex to center the 'X' */
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    font-size: 40px; /* Size of the 'X' */
+    color: white; /* Color of the 'X' */
+    z-index: 100; /* Ensure it's above other elements */
+}
+
+.game-title {
+    font-size: 2.5rem;
+    color: #d81111;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    letter-spacing: 5px;
+    animation: pulse 1s infinite; /* Adds a pulsing effect */
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 100vw; /* Ensures it stays within viewport width */
+}
+
+
+
