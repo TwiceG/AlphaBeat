@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import supabase from '../SupaBaseClient';
-import { Highscore } from '../types/highscore';
+import { Highscore } from '../types/Highscore';
+import '../style/Highscores.css';
 
 const Highscores: React.FC = () => {
     const [highscores, setHighscores] = useState<Highscore[]>([]);
@@ -11,7 +12,7 @@ const Highscores: React.FC = () => {
     const fetchHighscores = async () => {
         const { data, error } = await supabase
             .from('highscores')
-            .select('player_name, highscore,songs(artist, song_title))');
+            .select('player_name, highscore, songs(artist, song_title)');
 
         if (error) {
             console.error('Error fetching highscores:', error);
@@ -28,7 +29,7 @@ const Highscores: React.FC = () => {
     }, []);
 
     return (
-        <div>
+        <div className="highscores-container"> {/* Add the container class here */}
             <h1>Highscores</h1>
             {loading && <p>Loading...</p>}
             {error && <p style={{ color: 'red' }}>{error}</p>}
@@ -38,8 +39,7 @@ const Highscores: React.FC = () => {
                         <tr>
                             <th>Player Name</th>
                             <th>Highscore</th>
-                            <th>Artist</th>
-                            <th>Song Title</th>
+                            <th>Song</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -47,8 +47,7 @@ const Highscores: React.FC = () => {
                             <tr key={index}>
                                 <td>{highscore.player_name}</td>
                                 <td>{highscore.highscore}</td>
-                                <td>{highscore.songs?.artist}</td> 
-                                <td>{highscore.songs?.song_title}</td> 
+                                <td>{highscore.songs?.artist} - {highscore.songs?.song_title}</td>
                             </tr>
                         ))}
                     </tbody>
