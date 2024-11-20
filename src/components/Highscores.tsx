@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import supabase from '../SupaBaseClient';
-import { Highscore } from '../types/Highscore';
+import { Highscore } from '../types/highscore';
 import '../style/Highscores.css';
 
 const Highscores: React.FC = () => {
