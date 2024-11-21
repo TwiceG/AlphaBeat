@@ -59,7 +59,6 @@ html, body {
     }
     100% {
         top: 100vh; /* End at the bottom of the screen */
-        opacity: 0; /* Fade out towards the end */
     }
 }
 

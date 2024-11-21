@@ -23,6 +23,7 @@ const Game: React.FC = () => {
     const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null); 
     const [isPopupVisible, setIsPopupVisible] = useState<boolean>(false); 
     const [playerName, setPlayerName] = useState<string>(''); 
+    const intervalRef = useRef<NodeJS.Timeout | null>(null); 
 
     const audioContext = new (window.AudioContext)(); 
 
@@ -51,7 +52,6 @@ const Game: React.FC = () => {
                         song_url: `${song.audio_file_url}`
                     }));
                     setMusicList(formattedData);
-                    setSelectedMusic(formattedData[0]?.song_url ?? null); 
                 }
             } catch (error) {
                 console.error("Error fetching music list:", error);
@@ -75,15 +75,20 @@ const Game: React.FC = () => {
 
                 const { bpm } = await guess(audioBuffer);
                 const beatsPerSecond = bpm / 60;
-                const newBeatInterval = (1 / beatsPerSecond) * 1000; 
-                setBeatInterval(newBeatInterval); 
+                const newBeatInterval = (2 / beatsPerSecond) * 1000; 
+                setTimeout(() => {
+                    setBeatInterval(newBeatInterval); 
+                }, 0);// No delay, just defers execution
             } catch (error) {
                 console.error("Error detecting BPM:", error);
             }
         };
 
-        if (selectedMusic) {
+        if (selectedMusic && selectedMusic !== "no-song") {
+            // Fetch the BPM only if selectedMusic is a valid string and not "no-song"
             fetchSongBPM(selectedMusic); 
+        } else {
+            console.log("No song selected or song is 'no-song', skipping BPM fetch.");
         }
     }, [selectedMusic]);
 
@@ -94,23 +99,27 @@ const Game: React.FC = () => {
         const audio = document.getElementById('game-audio') as HTMLAudioElement;
 
         const handleMusicStart = () => {
-            if (intervalId) clearInterval(intervalId);
+            // Clear previous interval
+            if (intervalRef.current) clearInterval(intervalRef.current);
 
-            setFallingLetters([]);
-            setIsGameActive(true); 
+            // Reset falling letters and start game
+            setFallingLetters([]); 
+            setIsGameActive(true);
 
-            const newIntervalId = setInterval(() => {
+            // Set new interval for falling letters
+            intervalRef.current = setInterval(() => {
                 if (isGameActive) {
-                    generateFallingLetter(); 
+                    generateFallingLetter();
                 }
             }, beatInterval);
-            setIntervalId(newIntervalId);
 
+            // Add event listener for when audio ends
             audio.addEventListener('ended', () => {
-                if (intervalId) clearInterval(intervalId); 
-                setIsGameActive(false); 
+                if (intervalRef.current) clearInterval(intervalRef.current);
+                setIsGameActive(false);
             });
 
+            // Focus on game area if available
             if (gameBoxRef.current) {
                 gameBoxRef.current.focus();
             }
@@ -120,9 +129,9 @@ const Game: React.FC = () => {
 
         return () => {
             if (audio) audio.removeEventListener('play', handleMusicStart);
-            if (intervalId) clearInterval(intervalId); 
+            if (intervalRef.current) clearInterval(intervalRef.current); // Cleanup interval
         };
-    }, [beatInterval, selectedMusic, isGameActive, intervalId]);
+    }, [beatInterval, selectedMusic, isGameActive]);
 
     // Handle key press
     useEffect(() => {
