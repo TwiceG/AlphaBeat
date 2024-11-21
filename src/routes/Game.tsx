@@ -96,40 +96,34 @@ const Game: React.FC = () => {
 
     // Letter generation based on BPM
     useEffect(() => {
-        if (!selectedMusic) return;
+        if (!selectedMusic || selectedMusic == 'no-song') return;
     
         const audio = document.getElementById('game-audio') as HTMLAudioElement;
-    
+        
         const handleMusicStart = () => {
             // Clear previous interval if exists
             if (intervalRef.current) clearInterval(intervalRef.current);
-    
-            // Reset falling letters and start game
+
             setFallingLetters([]);
-            setIsGameActive(true); // Set the game as active when music starts
-    
-            // Set interval for falling letters based on the beat interval
-            intervalRef.current = setInterval(() => {
-                if (isGameActive) {
-                    generateFallingLetter();  // Generate a falling letter at each interval
-                }
-            }, beatInterval);
-    
+            setIsGameActive(true);  
+
             // Add event listener for when audio ends
             audio.addEventListener('ended', () => {
                 // Clear the interval and stop the game when audio ends
                 if (intervalRef.current) clearInterval(intervalRef.current);
                 setIsGameActive(false);
+                setIsPopupVisible(true);
             });
-    
+            
             // Focus on game area if available
             if (gameBoxRef.current) {
                 gameBoxRef.current.focus();
             }
         };
-    
+        
         // Start the game when the music starts playing
         audio.addEventListener('play', handleMusicStart);
+        resetGameLetters();
     
         // Cleanup function to remove event listeners and clear interval when component unmounts or changes
         return () => {
@@ -169,7 +163,6 @@ const Game: React.FC = () => {
 
 
     useEffect(() => {
-        // Call resetGameLetters when either beatInterval or fallDuration changes
         resetGameLetters();
     }, [fallDuration]);
 
@@ -323,13 +316,10 @@ const Game: React.FC = () => {
     
         // Update fall duration immediately
         setFallDuration(newFallDuration);
-
-    
-        // Reset the game letters and clear the previous interval
         resetGameLetters();
     };
     
-    // Function to reset game letters after difficulty change
+    // Function to reset game letters after difficulty change or song
     const resetGameLetters = () => {
         if (intervalRef.current) {
             clearInterval(intervalRef.current);
