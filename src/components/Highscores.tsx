@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import supabase from '../SupaBaseClient';
-import { Highscore } from '../types/highscore';
 import '../style/Highscores.css';
 
 const Highscores: React.FC = () => {
-    const [highscores, setHighscores] = useState<Highscore[]>([]);
+    const [highscores, setHighscores] = useState<any[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -12,13 +11,14 @@ const Highscores: React.FC = () => {
     const fetchHighscores = async () => {
         const { data, error } = await supabase
             .from('highscores')
-            .select('player_name, highscore, songs(artist, song_title)');
+            .select('id, player_name, highscore, songs(artist, song_title)');
 
         if (error) {
             console.error('Error fetching highscores:', error);
             setError(error.message);
             setLoading(false);
         } else {
+            console.log(data);
             setHighscores(data);
             setLoading(false); // Update loading state
         }

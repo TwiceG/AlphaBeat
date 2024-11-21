@@ -5,6 +5,7 @@ import '../style/Button.css';
 interface ButtonProps {
   text: string;
   onClick: () => void;  
+  children?: React.ReactNode;
   className?: string; 
 }
 
