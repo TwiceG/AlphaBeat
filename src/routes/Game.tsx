@@ -304,30 +304,26 @@ const Game: React.FC = () => {
  
     const handleDifficultyChange = (selectedDifficulty: 'easy' | 'medium' | 'hard') => {
         let newFallDuration: number;
-        let newBeatInterval: number;
     
-        // Set fall duration and beat interval based on the selected difficulty
+        // Set fall duration based on the selected difficulty
         switch (selectedDifficulty) {
             case 'easy':
                 newFallDuration = 5000;
-                newBeatInterval = (60 / 100) * 1000 * 2; 
                 break;
             case 'medium':
                 newFallDuration = 3000;
-                newBeatInterval = (60 / 120) * 1000 * 2; 
                 break;
             case 'hard':
                 newFallDuration = 1500;
-                newBeatInterval = (60 / 150) * 1000 * 2; 
                 break;
             default:
                 newFallDuration = 3000;
-                newBeatInterval = (60 / 120) * 1000 * 2; 
+                
         }
     
-        // Update fall duration and beat interval immediately
+        // Update fall duration immediately
         setFallDuration(newFallDuration);
-        setBeatInterval(newBeatInterval);
+
     
         // Reset the game letters and clear the previous interval
         resetGameLetters();
@@ -359,6 +355,12 @@ const Game: React.FC = () => {
         <div>
             {/* <h1 className="game-title">ALPHABEAT</h1>
             <label htmlFor="music-select">Choose music:</label> */}
+            <div className='game-header'>
+            <div>
+                <button onClick={() => handleDifficultyChange('easy')}>Easy</button>
+                <button onClick={() => handleDifficultyChange('medium')}>Medium</button>
+                <button onClick={() => handleDifficultyChange('hard')}>Hard</button>
+            </div>
             <select id="music-select" value={selectedMusic ?? ''} onChange={handleMusicChange}>
                 <option value="no-song">Choose a song</option>
                 {musicList.map(song => (
@@ -368,12 +370,7 @@ const Game: React.FC = () => {
                 ))}
             </select>
           
-            <div>
-                <button onClick={() => handleDifficultyChange('easy')}>Easy</button>
-                <button onClick={() => handleDifficultyChange('medium')}>Medium</button>
-                <button onClick={() => handleDifficultyChange('hard')}>Hard</button>
             </div>
-
             <div ref={gameBoxRef} className="game-box" tabIndex={0}>
             <div className="score-box">Score: {score}</div>
                 {errorVisible && <div className="error-message">Oops! Try again!</div>}
