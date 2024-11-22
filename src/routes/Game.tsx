@@ -33,6 +33,7 @@ const Game: React.FC = () => {
     // Music Handle
     const handleMusicChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedMusic(e.target.value);
+        setScore(0);
     };
 
     // Fetch music list from Supabase
