@@ -1,84 +1,93 @@
 .highscores-container {
-  margin: 20px auto;                      /* Center the container */
-  padding: 10px;                          /* Adjust padding for spacing */
-  background-color: #5eb3b3;              /* Light background */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
-  border-radius: 10px;                    /* Rounded corners */
-  width: 90%;                             /* Take up most of the screen on mobile */
-  max-width: 600px;                       /* Limit width for larger screens */
-  color: #000;                            /* Text color */
-  transition: background-color 0.3s;      /* Smooth transition for background */
-  text-align: center;                     /* Center text for the title */
+  margin: 20px auto;
+  padding: 10px;
+  background-color: #5eb3b3;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  width: 90%;
+  max-width: 600px;
+  color: #000;
+  transition: background-color 0.3s;
+  text-align: center;
 }
 
 table {
-  width: 100%;                            /* Full width of the container */
-  border-collapse: collapse;              /* Remove space between cells */
-  margin-top: 15px;                       /* Space from title or other content */
-  font-size: 14px;                        /* Default font size */
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  font-size: 14px;
 }
 
 th, td {
-  padding: 10px;                          /* Spacing in cells */
-  text-align: left;                       /* Align text to the left */
+  padding: 10px;
+  text-align: left;
 }
 
 th {
-  background-color: #3e7b94;              /* Header background */
-  color: white;                           /* Header text color */
-  font-weight: bold;                      /* Bold headers */
-  border-bottom: 1px solid #ddd;          /* Border under header */
+  background-color: #3e7b94;
+  color: white;
+  font-weight: bold;
+  border-bottom: 1px solid #ddd;
 }
 
 td {
-  background-color: #88d6d6;              /* Row background */
-  word-wrap: break-word;                  /* Allow text to wrap for smaller screens */
+  background-color: #88d6d6;
+  word-wrap: break-word;
 }
 
 tr:hover td {
-  background-color: #c2e0e0;              /* Highlight row on hover */
+  background-color: #c2e0e0;
 }
 
-/* Responsive Design for Smaller Screens */
 @media (max-width: 768px) {
   .highscores-container {
-    padding: 5px;                         /* Reduce padding */
+    padding: 5px;
   }
 
   table {
-    display: block;                       /* Make table block for scrolling */
-    overflow-x: auto;                     /* Horizontal scroll for small screens */
+    display: block;
+    overflow-x: auto;
   }
 
   th, td {
-    font-size: 12px;                      /* Smaller font for compact view */
-    padding: 8px;                         /* Reduce padding for cells */
+    font-size: 12px;
+    padding: 8px;
   }
 }
 
 @media (max-width: 480px) {
   table {
-    display: flex;                        /* Stack rows vertically */
+    display: flex;
     flex-direction: column;
   }
 
   tr {
-    display: flex;                        /* Display each row as flex */
+    display: flex;
     flex-direction: column;
-    border-bottom: 1px solid #ddd;        /* Add border for distinction */
+    border-bottom: 1px solid #ddd;
   }
 
   th, td {
-    text-align: center;                   /* Center align text for smaller viewports */
-    padding: 6px;                         /* Further reduce padding */
+    text-align: center;
+    padding: 6px;
   }
 
   th {
-    background-color: transparent;        /* Remove header background for smaller screens */
-    font-weight: normal;                  /* Make text consistent with body */
+    background-color: transparent;
+    font-weight: normal;
   }
 
   td {
-    border-bottom: none;                  /* Remove cell borders for smaller screens */
+    border-bottom: none;
   }
+}
+
+th {
+  cursor: pointer;
+  position: relative;
+}
+
+th span {
+  margin-left: 5px;
+  font-size: 12px;
 }
