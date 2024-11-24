@@ -7,8 +7,8 @@
   width: 90%;
   max-width: 600px;
   color: #000;
-  transition: background-color 0.3s;
   text-align: center;
+  transition: background-color 0.3s;
 }
 
 table {
@@ -21,6 +21,7 @@ table {
 th, td {
   padding: 10px;
   text-align: left;
+  word-wrap: break-word;
 }
 
 th {
@@ -28,17 +29,24 @@ th {
   color: white;
   font-weight: bold;
   border-bottom: 1px solid #ddd;
+  cursor: pointer;
+  position: relative;
+}
+
+th span {
+  margin-left: 5px;
+  font-size: 12px;
 }
 
 td {
   background-color: #88d6d6;
-  word-wrap: break-word;
 }
 
 tr:hover td {
   background-color: #c2e0e0;
 }
 
+/* Responsive Design */
 @media (max-width: 768px) {
   .highscores-container {
     padding: 5px;
@@ -80,14 +88,4 @@ tr:hover td {
   td {
     border-bottom: none;
   }
-}
-
-th {
-  cursor: pointer;
-  position: relative;
-}
-
-th span {
-  margin-left: 5px;
-  font-size: 12px;
 }
