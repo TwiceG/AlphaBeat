@@ -11,7 +11,7 @@ const Highscores: React.FC = () => {
     const fetchHighscores = async () => {
         const { data, error } = await supabase
             .from('highscores')
-            .select('id, player_name, highscore, songs(artist, song_title)');
+            .select('id, player_name, highscore, difficulty, songs(artist, song_title)');
 
         if (error) {
             console.error('Error fetching highscores:', error);
@@ -39,6 +39,7 @@ const Highscores: React.FC = () => {
                         <tr>
                             <th>Player Name</th>
                             <th>Highscore</th>
+                            <th>Difficulty</th>
                             <th>Song</th>
                         </tr>
                     </thead>
@@ -47,6 +48,7 @@ const Highscores: React.FC = () => {
                             <tr key={index}>
                                 <td>{highscore.player_name}</td>
                                 <td>{highscore.highscore}</td>
+                                <td>{highscore.difficulty}</td>
                                 <td>{highscore.songs?.artist} - {highscore.songs?.song_title}</td>
                             </tr>
                         ))}

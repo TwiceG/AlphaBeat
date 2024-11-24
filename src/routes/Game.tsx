@@ -23,6 +23,7 @@ const Game: React.FC = () => {
     //Game logic
     const [fallingLetters, setFallingLetters] = useState<string[]>([]); 
     const [fallDuration, setFallDuration] = useState<number>(3000); // Default to medium difficulty
+    const [difficultyLevel, setDifficultyLevel] = useState<string>('medium');
     const [errorVisible, setErrorVisible] = useState<boolean>(false); 
     const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null); 
     const intervalRef = useRef<NodeJS.Timeout | null>(null); 
@@ -273,7 +274,7 @@ const Game: React.FC = () => {
         try {
             const { data, error } = await supabase
             .from('highscores')
-            .insert([{ player_name: playerName, highscore: score, song_id: songId }]);
+            .insert([{ player_name: playerName, highscore: score, difficulty: difficultyLevel,  song_id: songId }]);
             
             if (error) {
                 console.error("Error inserting highscore:", error.message);
@@ -326,16 +327,18 @@ const Game: React.FC = () => {
         switch (selectedDifficulty) {
             case 'easy':
                 newFallDuration = 5000;
+                setDifficultyLevel('essy');
                 break;
             case 'medium':
                 newFallDuration = 3000;
+                setDifficultyLevel('medium');
                 break;
             case 'hard':
                 newFallDuration = 1500;
+                setDifficultyLevel('hard');
                 break;
             default:
-                newFallDuration = 3000;
-                
+                newFallDuration = 3000;                 
         }
     
         // Update fall duration immediately
