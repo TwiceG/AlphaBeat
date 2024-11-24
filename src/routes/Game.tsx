@@ -12,21 +12,36 @@ interface Music {
 }
 
 const Game: React.FC = () => {
+    //Game
+    const gameBoxRef = useRef<HTMLDivElement | null>(null);
+    const [isGameActive, setIsGameActive] = useState<boolean>(false); 
+    const isGameActiveRef = useRef(isGameActive);
+    //Music
     const [musicList, setMusicList] = useState<Music[]>([]); 
     const [selectedMusic, setSelectedMusic] = useState<string | null>('no-song'); 
-    const [beatInterval, setBeatInterval] = useState<number>((60 / 120) * 1000 * 2); 
+    const [beatInterval, setBeatInterval] = useState<number>((60 / 120) * 1000 * 2);
+    //Game logic
     const [fallingLetters, setFallingLetters] = useState<string[]>([]); 
-    const gameBoxRef = useRef<HTMLDivElement | null>(null); 
+    const [fallDuration, setFallDuration] = useState<number>(3000); // Default to medium difficulty
     const [errorVisible, setErrorVisible] = useState<boolean>(false); 
-    const [score, setScore] = useState<number>(0); 
-    const [isGameActive, setIsGameActive] = useState<boolean>(false); 
     const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null); 
+    const intervalRef = useRef<NodeJS.Timeout | null>(null); 
+    //Accessories
+    const [score, setScore] = useState<number>(0); 
     const [isPopupVisible, setIsPopupVisible] = useState<boolean>(false); 
     const [playerName, setPlayerName] = useState<string>(''); 
-    const intervalRef = useRef<NodeJS.Timeout | null>(null); 
-    const [fallDuration, setFallDuration] = useState<number>(3000); // Default to medium difficulty
+    //Mobile
     const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|Windows Phone/i.test(navigator.userAgent);
+    const [keyboardLayout, setKeyboardLayout] = useState<"QWERTY" | "QWERTZ">("QWERTY");
 
+    const keyboardLayouts = {
+        QWERTY: ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"],
+        QWERTZ: ["QWERTZUIOP", "ASDFGHJKL", "YXCVBNM"],
+    };
+
+    const handleLayoutSwitch = () => {
+        setKeyboardLayout(prev => (prev === "QWERTY" ? "QWERTZ" : "QWERTY"));
+    };
 
     const audioContext = new (window.AudioContext)(); 
 
@@ -172,7 +187,7 @@ const Game: React.FC = () => {
 
     const getRandomLetter = () => {
         const letter = String.fromCharCode(65 + Math.floor(Math.random() * 26));
-        return letter; // Only return the letter, don't create or append the element here
+        return letter; 
     };
     
     const generateFallingLetter = () => {
@@ -185,15 +200,16 @@ const Game: React.FC = () => {
         const gameBox = gameBoxRef.current;
         const boxRect = gameBox?.getBoundingClientRect();
     
+        if (!gameBox || !boxRect) return; // Ensure gameBox and boxRect exist
+    
         const letterWidth = 30; // Approximate width of the letter
-        const randomX = Math.random() * ((boxRect?.width ?? 0) - letterWidth);
+        const randomX = Math.random() * (boxRect.width - letterWidth);
     
         letterElement.style.left = `${randomX}px`;
         letterElement.style.position = 'absolute';
         letterElement.style.top = '0px';
     
-        // Add the letter to the gameBox
-        if (gameBox) gameBox.appendChild(letterElement);
+        gameBox.appendChild(letterElement);
     
         // Apply animation duration dynamically
         requestAnimationFrame(() => {
@@ -205,6 +221,7 @@ const Game: React.FC = () => {
             letterElement.remove();
         }, fallDuration);
     };
+    
     
 
     
@@ -274,28 +291,33 @@ const Game: React.FC = () => {
     
     const pauseGame = () => {
         const audio = document.getElementById('game-audio') as HTMLAudioElement;
-        if (audio) audio.pause(); 
+        if (audio) audio.pause();
+    
         if (intervalId) clearInterval(intervalId); 
         setIsGameActive(false); 
+        isGameActiveRef.current = false; // Update ref to reflect paused state
         setIsPopupVisible(true); 
     };
     
     const handleCancel = () => {
         const audio = document.getElementById('game-audio') as HTMLAudioElement;
-        if (audio) {
-            audio.play(); 
-        } 
+        if (audio) audio.play();
+    
         setIsGameActive(true); 
+        isGameActiveRef.current = true; // Update ref to reflect active state
         setIsPopupVisible(false); 
     
         // Restart the interval for generating falling letters
         const newIntervalId = setInterval(() => {
-            if (isGameActive) {
+            if (isGameActiveRef.current) { // Use ref to check active state
                 generateFallingLetter();
             }
         }, beatInterval);
-        setIntervalId(newIntervalId);
+        setIntervalId(newIntervalId); 
     };
+    
+
+
  
     const handleDifficultyChange = (selectedDifficulty: 'easy' | 'medium' | 'hard') => {
         let newFallDuration: number;
@@ -343,11 +365,7 @@ const Game: React.FC = () => {
     // Mobile inerface 
     const renderQwertyKeyboard = () => (
         <div className="qwerty-keyboard">
-            {[
-                "QWERTZUIOP",
-                "ASDFGHJKL",
-                "YXCVBNM"
-            ].map((row, rowIndex) => (
+            {keyboardLayouts[keyboardLayout].map((row, rowIndex) => (
                 <div key={rowIndex} className="keyboard-row">
                     {row.split("").map(letter => (
                         <button
@@ -374,6 +392,8 @@ const Game: React.FC = () => {
                 setScore(prev => prev + 10); 
             }
     }
+
+    
     
     
     
@@ -403,6 +423,11 @@ const Game: React.FC = () => {
                 {errorVisible && <div className="error-message">Oops! Try again!</div>}
             </div>
             {isMobile && renderQwertyKeyboard()}
+            <div className="keyboard-switch">
+                <button onClick={handleLayoutSwitch}>
+                    {keyboardLayout === "QWERTY" ? "EN" : "HU"}
+                </button>
+            </div>
             <div className='game-footer'>
             <Button text="Pause Game" className='pause-btn' onClick={pauseGame} />
             </div>

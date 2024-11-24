@@ -213,6 +213,9 @@ select {
 }
 
 
+
+/* QWERTY keyboard */
+
 .qwerty-keyboard {
     display: flex;
     flex-direction: column;
@@ -222,7 +225,7 @@ select {
     border-top: 2px solid #ccc;
     width: 100%;
     position: fixed;
-    bottom: 0;
+    bottom: 40px; /* Leave space for the switch button */
     z-index: 1000;
 }
 
@@ -233,11 +236,11 @@ select {
 }
 
 .key-btn {
-    width: 8%; /* Adjust for even spacing on small screens */
+    width: 8%;
     max-width: 50px;
-    color: #2c2c2c;
     height: 40px;
     margin: 2px;
+    color: #2c2c2c;
     font-size: 18px;
     text-align: center;
     border: 1px solid #ccc;
@@ -249,4 +252,32 @@ select {
 
 .key-btn:active {
     background-color: #ddd;
+}
+
+.keyboard-switch {
+    position: fixed;
+    bottom: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.keyboard-switch button {
+    background-color: #3e7b94;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 14px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s;
+}
+
+.keyboard-switch button:hover {
+    background-color: #2a5d6c;
+}
+
+.keyboard-switch button:active {
+    background-color: #1e4451;
 }
