@@ -45,7 +45,7 @@ const Highscores: React.FC = () => {
     setHighscores(sortedData);
     };
 
-    const getSortArrow = (key) => {
+    const getSortArrow = (key: string) => {
     if (sortConfig.key === key) {
         return <span>{sortConfig.direction === 'asc' ? '▲' : '▼'}</span>;
     }
@@ -79,7 +79,7 @@ const Highscores: React.FC = () => {
                     <tbody>
                         {highscores.map((highscore, index) => (
                             <tr key={index}>
-                                <td>{highscore.player_name}</td>
+                                <td>{highscore.player_name ? highscore.player_name : 'Unkown Player'}</td>
                                 <td>{highscore.highscore}</td>
                                 <td>{highscore.difficulty}</td>
                                 <td>

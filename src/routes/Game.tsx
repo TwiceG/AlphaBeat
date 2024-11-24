@@ -327,7 +327,7 @@ const Game: React.FC = () => {
         switch (selectedDifficulty) {
             case 'easy':
                 newFallDuration = 5000;
-                setDifficultyLevel('essy');
+                setDifficultyLevel('easy');
                 break;
             case 'medium':
                 newFallDuration = 3000;
