@@ -25,6 +25,7 @@ const Game: React.FC = () => {
     const [playerName, setPlayerName] = useState<string>(''); 
     const intervalRef = useRef<NodeJS.Timeout | null>(null); 
     const [fallDuration, setFallDuration] = useState<number>(3000); // Default to medium difficulty
+    const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|Windows Phone/i.test(navigator.userAgent);
 
 
     const audioContext = new (window.AudioContext)(); 
@@ -339,6 +340,41 @@ const Game: React.FC = () => {
         }, beatInterval);
     };
     
+    // Mobile inerface 
+    const renderQwertyKeyboard = () => (
+        <div className="qwerty-keyboard">
+            {[
+                "QWERTZUIOP",
+                "ASDFGHJKL",
+                "YXCVBNM"
+            ].map((row, rowIndex) => (
+                <div key={rowIndex} className="keyboard-row">
+                    {row.split("").map(letter => (
+                        <button
+                            key={letter}
+                            className="key-btn"
+                            onClick={() => handleLetterInput(letter)}
+                        >
+                            {letter}
+                        </button>
+                    ))}
+                </div>
+            ))}
+        </div>
+    );
+
+    const handleLetterInput = (letter: string) => {
+            const isLetterPresent = removeFallingLetter(letter);
+
+            if (!isLetterPresent) {
+                setErrorVisible(true);
+                setScore(prev => Math.max(prev - 5, 0)); 
+                setTimeout(() => setErrorVisible(false), 1000); 
+            } else {
+                setScore(prev => prev + 10); 
+            }
+    }
+    
     
     
 
@@ -366,6 +402,7 @@ const Game: React.FC = () => {
             <div className="score-box">Score: {score}</div>
                 {errorVisible && <div className="error-message">Oops! Try again!</div>}
             </div>
+            {isMobile && renderQwertyKeyboard()}
             <div className='game-footer'>
             <Button text="Pause Game" className='pause-btn' onClick={pauseGame} />
             </div>
