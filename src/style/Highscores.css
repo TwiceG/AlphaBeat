@@ -1,43 +1,84 @@
 .highscores-container {
-  margin: 30px auto;                      /* Center the container */
-  padding: 10px 15px;                     /* Adjust padding for spacing */
+  margin: 20px auto;                      /* Center the container */
+  padding: 10px;                          /* Adjust padding for spacing */
   background-color: #5eb3b3;              /* Light background */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
   border-radius: 10px;                    /* Rounded corners */
-  width: auto;                            /* Auto width to fit content */
-  max-width: 50%;                       /* Set a fixed maximum width for the table */
-  color: rgb(0, 0, 0);                           /* Text color */
+  width: 90%;                             /* Take up most of the screen on mobile */
+  max-width: 600px;                       /* Limit width for larger screens */
+  color: #000;                            /* Text color */
   transition: background-color 0.3s;      /* Smooth transition for background */
-  text-align: center;                     /* Center text in the table */
+  text-align: center;                     /* Center text for the title */
 }
 
 table {
-  width: 100%;                            /* Table width 100% of its parent container */
-  border-collapse: collapse;              /* Remove space between table cells */
-  margin-top: 20px;                       /* Space from title or other content */
+  width: 100%;                            /* Full width of the container */
+  border-collapse: collapse;              /* Remove space between cells */
+  margin-top: 15px;                       /* Space from title or other content */
+  font-size: 14px;                        /* Default font size */
 }
 
 th, td {
-  padding: 8px 12px;                     /* Adjust padding to make the table more compact */
+  padding: 10px;                          /* Spacing in cells */
   text-align: left;                       /* Align text to the left */
-  font-size: 14px;                        /* Smaller font size */
 }
 
 th {
   background-color: #3e7b94;              /* Header background */
   color: white;                           /* Header text color */
-  font-weight: bold;                      /* Bold text for headers */
-  border-bottom: 1px solid #ddd;          /* Optional light border for header */
+  font-weight: bold;                      /* Bold headers */
+  border-bottom: 1px solid #ddd;          /* Border under header */
 }
 
 td {
-  background-color: #88d6d6;              /* Light background for rows */
+  background-color: #88d6d6;              /* Row background */
+  word-wrap: break-word;                  /* Allow text to wrap for smaller screens */
 }
 
 tr:hover td {
   background-color: #c2e0e0;              /* Highlight row on hover */
 }
 
-tr:last-child td {
-  border-bottom: none;                    /* Remove bottom border for last row */
+/* Responsive Design for Smaller Screens */
+@media (max-width: 768px) {
+  .highscores-container {
+    padding: 5px;                         /* Reduce padding */
+  }
+
+  table {
+    display: block;                       /* Make table block for scrolling */
+    overflow-x: auto;                     /* Horizontal scroll for small screens */
+  }
+
+  th, td {
+    font-size: 12px;                      /* Smaller font for compact view */
+    padding: 8px;                         /* Reduce padding for cells */
+  }
+}
+
+@media (max-width: 480px) {
+  table {
+    display: flex;                        /* Stack rows vertically */
+    flex-direction: column;
+  }
+
+  tr {
+    display: flex;                        /* Display each row as flex */
+    flex-direction: column;
+    border-bottom: 1px solid #ddd;        /* Add border for distinction */
+  }
+
+  th, td {
+    text-align: center;                   /* Center align text for smaller viewports */
+    padding: 6px;                         /* Further reduce padding */
+  }
+
+  th {
+    background-color: transparent;        /* Remove header background for smaller screens */
+    font-weight: normal;                  /* Make text consistent with body */
+  }
+
+  td {
+    border-bottom: none;                  /* Remove cell borders for smaller screens */
+  }
 }
