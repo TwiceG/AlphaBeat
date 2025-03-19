@@ -17,6 +17,9 @@ const NavBar: React.FC = () => {
                 <li className="nav-item">
                     <Link to="/highscores" className="nav-link">Highscores</Link>
                 </li>
+                <li className='nav-item'>
+                    <Link to="https://calendarling-dia.vercel.app/">Calendarling</Link>
+                </li>
             </ul>
         </nav>
     );
